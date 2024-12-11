@@ -1,5 +1,4 @@
 import { deleteAsync } from 'del';
-import { publish } from 'gh-pages';
 import * as dartSass from 'sass';
 import autoprefixer from 'autoprefixer';
 import browserSync from 'browser-sync';
@@ -84,10 +83,6 @@ const clearBuildFolder = () => {
   return deleteAsync(`${BUILD_PATH}`, {
     force: true,
   });
-};
-
-const publishGhPages = (cb) => {
-  publish(`${BUILD_PATH}/`, cb);
 };
 
 const bustCache = () => {
@@ -320,7 +315,6 @@ const buildProd = series(
   bustCache,
 );
 const startDev = series(buildDev, startServer);
-const deployGhPages = series(buildProd, publishGhPages);
 
 const _default = startDev;
 export { _default as default };
@@ -331,5 +325,3 @@ export { _buildProd as buildProd };
 const _buildDev = buildDev;
 export { _buildDev as buildDev };
 
-const _deployGhPages = deployGhPages;
-export { _deployGhPages as deployGhPages };
